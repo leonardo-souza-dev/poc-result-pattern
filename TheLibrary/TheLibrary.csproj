@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>TheLibrary</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore">
+        <HintPath>..\..\..\..\..\home\kazoku\.dotnet\shared\Microsoft.AspNetCore.App\8.0.18\Microsoft.AspNetCore.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
+        <HintPath>..\..\..\..\..\home\kazoku\.dotnet\shared\Microsoft.AspNetCore.App\8.0.18\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
+        <HintPath>..\..\..\..\..\home\kazoku\.dotnet\shared\Microsoft.AspNetCore.App\8.0.18\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.AspNetCore.Mvc.Core">
+        <HintPath>..\..\..\..\..\home\kazoku\.dotnet\shared\Microsoft.AspNetCore.App\8.0.18\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+<!--    <ItemGroup>-->
+<!--      <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="8.0.0" />-->
+<!--    </ItemGroup>-->
+
+</Project>
