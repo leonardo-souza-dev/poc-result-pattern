@@ -1,42 +1,31 @@
 using Foo.Api.Domain;
-using Foo.Api.Infrastructure;
 using Foo.Api.Repository;
-using TheLibrary;
+using ResultPattern;
 
 namespace Foo.Api.UseCases
 {
     public class GetClientUseCase(IClientRepository clientRepository)
     {
-        public Result<CreateClientResponse> Handle(GetClientRequest? request)
+        public async Task<Result<GetClientResponse>> Handle(GetClientRequest request)
         {
-            if (request == null)
-            {
-                return Result<CreateClientResponse>.Failure("Invalid request.", FooResultStatus.InvalidRequest);
-            }
-            
+            if (request.Name.Split().Count() != 2)
+                return Result<GetClientResponse>.AsFailure(Failure.Of(FailureConstants.ValidationError, "Erro de validação."));
+
             var client = clientRepository.GetByName(request.Name);
             if (client == null)
-            {
-                return Result<CreateClientResponse>.Failure("Client not found.", FooResultStatus.ClientNotFound);
-            }
-            
-            return Result<CreateClientResponse>.Success(CreateClientResponse.Of(client), FooResultStatus.Success);
+                return Result<GetClientResponse>.AsFailure(Failure.Of(FailureConstants.ResourceNotFound, "O cliente solicitado não foi encontrado."));
+
+            return Result<GetClientResponse>.AsSuccess(GetClientResponse.Of(client));
         }
     }
 
-    public sealed class GetClientRequest
-    {
-        public required string Name { get; init; }
-    }
-    
-    public class CreateClientResponse
+    public sealed record GetClientRequest(int Id, string Name);
+
+    public class GetClientResponse
     {
         public required int Id { get; init; }
         public required string Name { get; init; }
 
-        public static CreateClientResponse Of(Client client)
-        {
-            return new CreateClientResponse { Id = client.Id, Name = client.Name };
-        }
+        public static GetClientResponse Of(Client client) => new() { Id = client.Id, Name = client.Name };
     }
 }

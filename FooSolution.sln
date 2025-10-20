@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foo.Api.IntegrationTests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foo.Api.UnitTests", "Foo.Api.UnitTests\Foo.Api.UnitTests.csproj", "{3AFB45D1-D5DB-4019-A4FC-901CCA5EFE04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheLibrary", "TheLibrary\TheLibrary.csproj", "{B99DA070-13FE-4F21-9B5D-EE2F7E2264A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResultPattern", "ResultPattern\ResultPattern.csproj", "{B99DA070-13FE-4F21-9B5D-EE2F7E2264A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

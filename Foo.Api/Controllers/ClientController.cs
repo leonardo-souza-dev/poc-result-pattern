@@ -1,6 +1,5 @@
 using Foo.Api.UseCases;
 using Microsoft.AspNetCore.Mvc;
-using static TheLibrary.ControllerHandler;
 
 namespace Foo.Api.Controllers;
 
@@ -11,8 +10,18 @@ public class ClientController(GetClientUseCase getClientUseCase) : ControllerBas
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery] GetClientRequest request)
     {
-        var result = getClientUseCase.Handle(request);
-        
-        return await ResultHandler(Ok(result.Value), result);
+        var result = await getClientUseCase.Handle(request);
+
+        if (result.IsFailure && result.Failure.IsCode(FailureConstants.ResourceNotFound))
+        {
+            return NotFound(result.Failure.Message);
+        }
+
+        if (result.IsFailure && result.Failure.IsCode(FailureConstants.ValidationError))
+        {
+            return BadRequest(result.Failure.Message);
+        }
+
+        return Ok(result.Data);
     }
 }

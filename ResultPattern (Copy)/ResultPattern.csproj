@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <RootNamespace>ResultPattern</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0.3" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+        <HintPath>..\..\..\..\..\home\kazoku\.nuget\packages\microsoft.extensions.dependencyinjection.abstractions\9.0.4\lib\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.Extensions.Logging.Abstractions">
+        <HintPath>..\..\..\..\..\home\kazoku\.nuget\packages\microsoft.extensions.logging.abstractions\9.0.4\lib\net8.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+<!--    <ItemGroup>-->
+<!--      <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="8.0.0" />-->
+<!--    </ItemGroup>-->
+
+</Project>
