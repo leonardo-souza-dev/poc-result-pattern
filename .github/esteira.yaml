@@ -1,4 +1,4 @@
-name: .NET
+name: Esteira DEV
 
 on:
   push:
@@ -12,12 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout (com histórico completo)
+    - name: Checkout
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
-    - name: Setup .NET
+    - name: Setup .NET V4
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
