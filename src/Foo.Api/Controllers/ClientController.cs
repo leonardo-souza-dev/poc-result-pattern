@@ -12,16 +12,6 @@ public class ClientController(GetClientUseCase getClientUseCase) : ControllerBas
     {
         var result = await getClientUseCase.Handle(request);
 
-        if (result.IsFailure && result.Failure.IsCode(FailureConstants.ResourceNotFound))
-        {
-            return NotFound(result.Failure.Message);
-        }
-
-        if (result.IsFailure && result.Failure.IsCode(FailureConstants.ValidationError))
-        {
-            return BadRequest(result.Failure.Message);
-        }
-
-        return Ok(result.Data);
+        return Ok(result);
     }
 }

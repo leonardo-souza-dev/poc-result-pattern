@@ -1,0 +1,53 @@
+name: .NET
+
+on:
+  push:
+    branches: 
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout (com histórico completo)
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Install Coverlet
+      run: dotnet tool install --global coverlet.console
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Install SonarScanner for .NET
+      run: dotnet tool install --global dotnet-sonarscanner
+
+    - name: Add .NET tools to PATH
+      run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+
+    - name: SonarCloud Begin
+      run: |
+        dotnet sonarscanner begin \
+          /k:"ltreze_poc-result-pattern" \
+          /o:"ltreze" \
+          /d:sonar.login="${{ secrets.SONAR_TOKEN }}" \
+          /d:sonar.cs.opencover.reportsPaths="coverage-results/coverage.json"
+
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Test with Coverage
+      run: dotnet test --no-build --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=json /p:CoverletOutput=coverage-results/coverage.json
+
+    - name: SonarCloud End
+      run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
