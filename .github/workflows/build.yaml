@@ -25,8 +25,7 @@ jobs:
     - name: Install Coverlet
       run: dotnet tool install --global coverlet.console
 
-    - name: Restore dependencies
-      run: dotnet restore ./src/FooSolution.sln
+    # Restore previous place
 
     - name: Install SonarScanner for .NET
       run: dotnet tool install --global dotnet-sonarscanner
@@ -44,8 +43,10 @@ jobs:
           /d:sonar.login="$SONAR_TOKEN" \
           /d:sonar.cs.opencover.reportsPaths="coverage-results/coverage.json"
 
-    - name: Build
-      run: dotnet build ./src/FooSolution.sln --configuration Release --no-restore
+    - name: Restore and Build 
+      run: |
+        dotnet restore ./src/FooSolution.sln
+        dotnet build ./src/FooSolution.sln --configuration Release --no-restore
 
     - name: Test with Coverage
       run: dotnet test ./src/FooSolution.sln --no-build --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=json /p:CoverletOutput=coverage-results/coverage.json
