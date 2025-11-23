@@ -35,11 +35,13 @@ jobs:
       run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
     - name: SonarCloud Begin
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         dotnet sonarscanner begin \
           /k:"leonardo-souza-dev_poc-result-pattern" \
           /o:"ltreze" \
-          /d:sonar.login="${{ secrets.SONAR_TOKEN }}" \
+          /d:sonar.login="$SONAR_TOKEN" \
           /d:sonar.cs.opencover.reportsPaths="coverage-results/coverage.json"
 
     - name: Build
@@ -49,4 +51,6 @@ jobs:
       run: dotnet test ./src/FooSolution.sln --no-build --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=json /p:CoverletOutput=coverage-results/coverage.json
 
     - name: SonarCloud End
-      run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: dotnet sonarscanner end /d:sonar.login="$SONAR_TOKEN"
