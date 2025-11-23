@@ -25,7 +25,10 @@ jobs:
     - name: Install Coverlet
       run: dotnet tool install --global coverlet.console
 
-    # Restore previous place
+    - name: Install Amazon.Lambda.Tools
+      run: |
+        dotnet tool install -g Amazon.Lambda.Tools
+        echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
     - name: Install SonarScanner for .NET
       run: dotnet tool install --global dotnet-sonarscanner
@@ -49,7 +52,8 @@ jobs:
         dotnet build ./src/FooSolution.sln --configuration Release --no-restore
 
     - name: Test with Coverage
-      run: dotnet test ./src/FooSolution.sln --no-build --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=json /p:CoverletOutput=coverage-results/coverage.json
+      run: |
+        dotnet test ./src/FooSolution.sln --no-build --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=json /p:CoverletOutput=coverage-results/coverage.json
 
     - name: SonarCloud End
       env:
