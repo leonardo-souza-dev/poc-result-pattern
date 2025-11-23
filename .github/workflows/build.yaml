@@ -1,4 +1,4 @@
-name: Esteira DEV
+name: Implantar em Desenvolvimento
 
 on:
   push:
@@ -8,8 +8,11 @@ on:
       - ci/**
 
 jobs:
-  build:
+  compilar-e-implantar:
     runs-on: ubuntu-latest
+    
+    env:
+      BUILD_CONFIGURATION: 'Release'
 
     steps:
     - name: Checkout
@@ -17,7 +20,7 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Setup .NET V4
+    - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
@@ -49,11 +52,11 @@ jobs:
     - name: Restore and Build 
       run: |
         dotnet restore ./src/FooSolution.sln
-        dotnet build ./src/FooSolution.sln --configuration Release --no-restore
+        dotnet build ./src/FooSolution.sln --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
 
     - name: Test with Coverage
       run: |
-        dotnet test ./src/FooSolution.sln --no-build --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=json /p:CoverletOutput=coverage-results/coverage.json
+        dotnet test ./src/FooSolution.sln --no-build --configuration ${{ env.BUILD_CONFIGURATION }} /p:CollectCoverage=true /p:CoverletOutputFormat=json /p:CoverletOutput=coverage-results/coverage.json
 
     - name: SonarCloud End
       env:
